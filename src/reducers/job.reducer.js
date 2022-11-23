@@ -8,16 +8,26 @@ export default function jobReducer(state = initialState, action) {
       return action.payload;
 
     case LIKE_JOB:
-      return {
-        ...state,
-        likers: action.payload,
-      };
+      return state.map((job) => {
+        if (job._id === action.payload.jobId) {
+          return {
+            ...job,
+            likers: [action.payload.userId, ...job.likers],
+          };
+        }
+        return job;
+      });
 
     case UNLIKE_JOB:
-      return {
-        ...state,
-        likers: action.payload,
-      };
+      return state.map((job) => {
+        if (job._id === action.payload.jobId) {
+          return {
+            ...job,
+            likers: job.likers.filter((id) => id !== action.payload.userId),
+          };
+        }
+        return job;
+      });
 
     default:
       return state;

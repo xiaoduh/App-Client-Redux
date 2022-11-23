@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { dateParser, isEmpty } from "../utils";
+import { NavLink } from "react-router-dom";
+import { dateParser, isEmpty, upperCase } from "../utils";
+import LikeButton from "./LikeButton";
 
 const Card = ({ job }) => {
   const [isLoading, setIsLoading] = useState(true);
+  // const [isApply, setIsApply] = useState(false);
   const usersData = useSelector((state) => state.usersReducer);
   const jobData = useSelector((state) => state.jobReducer);
   const companiesData = useSelector((state) => state.companyReducer);
@@ -19,33 +22,57 @@ const Card = ({ job }) => {
         <i className="fas fa-spinner fa-spin"></i>
       ) : (
         <>
-          <div className="card-left">
-            {/* <h3>
-              {!isEmpty(companiesData[0]) &&
-                companiesData
-                  .map((company) => {
-                    if (company._id === job.companyId) return company.nom;
-                  })
-                  .join("")}
-            </h3> */}
-          </div>
+          <div className="card-left"></div>
           <div className="card-right">
             <div className="card-header">
               <div className="pseudo">
                 <h3>
-                  {job.titre} pour {job.entreprise}
+                  {upperCase(job.titre)} pour {upperCase(job.entreprise)}
                 </h3>
               </div>
-              <span>
+              <h6>
                 publié par :{" "}
-                {!isEmpty(usersData[0]) &&
-                  usersData
-                    .map((user) => {
-                      if (user._id === job.auteurId) return user.identifiant;
+                <span>
+                  {!isEmpty(usersData[0]) &&
+                    usersData
+                      .map((user) => {
+                        if (user._id === job.auteurId)
+                          return upperCase(user.identifiant);
+                      })
+                      .join("")}
+                </span>
+              </h6>
+              <h6>le {dateParser(job.createdAt)}</h6>
+            </div>
+            <div className="card-footer">
+              <h6>Le profil recherché : {job.profil}</h6>
+              <h6>Les compétences impératives : {job.competence}</h6>
+              <h6>Le TJM maximum: {job.tjm} €/J</h6>
+              <h6>
+                Localisation :{" "}
+                {!isEmpty(companiesData[0]) &&
+                  companiesData
+                    .map((company) => {
+                      if (company._id === job.companyId)
+                        return company.localisation;
                     })
                     .join("")}
-              </span>
-              <span>le {dateParser(job.createdAt)}</span>
+              </h6>
+            </div>
+            <div className="card-footer">
+              <div className="comment-icon">
+                <LikeButton job={job} />
+              </div>
+              <div className="comment-icon">
+                <img src="./img/icons/envelope.svg" alt="candidature" />{" "}
+                {job.candidat.length}
+              </div>
+              <div className="postuler">
+                <NavLink to="/apply" state={{ from: job }}>
+                  <h5>Postuler </h5>
+                </NavLink>
+                <img src="./img/icons/circle-down-solid.svg" alt="" />
+              </div>
             </div>
           </div>
         </>

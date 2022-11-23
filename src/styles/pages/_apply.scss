@@ -1,0 +1,127 @@
+.apply-container {
+    margin: 3rem;
+
+    .header-profil-container {
+        position: relative;
+        
+        h3 {
+            text-align: center;
+        }
+        input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 14px 20px;
+            margin: 0 auto;
+            font-size: 1rem;
+            font-family: "font-3", serif;
+            background: #0D1B38;
+            color: #fdfdfd;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.1rem;
+            border-radius: 20px 6px 20px 20px;
+
+            &:hover {
+                background: $color-3;
+            }
+        }
+    }
+
+    .apply-form {
+
+        display: grid;
+        grid-template-columns: 60% 40%;
+        gap: 1.5rem;
+    
+        @media screen and(max-width: 550px) {
+          min-width: 200px;
+        }
+
+        .content-job-desc {
+            background: #fdfdfd;
+            border: 1px solid rgba(85, 85, 85, 0.288);
+            border-radius: 20px;
+
+            &:hover {
+                box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+              }
+        }
+    
+        .form-container {        
+            border: none;
+            background: $color-5;
+            min-width: 490px;
+            width: 90%;
+            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 20px;
+   
+    
+          @media screen and(max-width: 550px) {
+            grid-template-columns: 1fr;
+          }
+    
+          ul {
+            li {
+              cursor: pointer;
+              border-radius: 20px;
+              padding: 10px 20px;
+              transition: 0.2s;
+    
+              @media screen and(max-width: 550px) {
+                width: 80%;
+                margin: 0 auto;
+              }
+            }
+            .active-btn {
+              background: $color-1;
+              color: white;
+    
+              &:hover {
+                background: $color-2;
+              }
+            }
+            li:not(.active-btn) {
+              &:hover {
+                transform: translateX(3px);
+              }
+            }
+            #login {
+              position: relative;
+              @media screen and(max-width: 550px) {
+                margin-bottom: 30px;
+    
+                &:after {
+                  content: "";
+                  position: absolute;
+                  bottom: -10px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  width: 80%;
+                  height: 1px;
+                  background: $color-2;
+                }
+              }
+            }
+          }
+          form {
+            input {
+              padding: 14px 20px;
+              margin: 0;
+              font-size: 1rem;
+              font-family: $font-3;
+              border-radius: 20px;
+    
+              &:focus {
+                box-shadow: 0 0 3px rgba(51, 51, 51, 0.2);
+              }
+            }
+            a {
+              color: rgb(252, 252, 253);
+            }
+          }
+        }
+      }
+}

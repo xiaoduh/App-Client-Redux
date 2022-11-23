@@ -6,6 +6,7 @@ import { isEmpty } from "./utils";
 
 const Thread = () => {
   const [loadJob, setLoadJob] = useState(true);
+  const [count, setCount] = useState(5);
   // const [loadCompany, setLoadCompany] = useState(true);
   const dispatch = useDispatch();
   const jobs = useSelector((state) => state.jobReducer);
@@ -19,12 +20,25 @@ const Thread = () => {
   //   }
   // }, [loadCompany, dispatch]);
 
+  const loadMore = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 1 >
+      document.scrollingElement.scrollHeight
+    ) {
+      setLoadJob(true);
+    }
+  };
+
   useEffect(() => {
     if (loadJob) {
-      dispatch(getJobs());
+      dispatch(getJobs(count));
       setLoadJob(false);
+      setCount(count + 5);
     }
-  }, [loadJob, dispatch]);
+
+    window.addEventListener("scroll", loadMore);
+    return () => window.removeEventListener("scroll", loadMore);
+  }, [loadJob, dispatch, count]);
 
   return (
     <div className="thread-container">

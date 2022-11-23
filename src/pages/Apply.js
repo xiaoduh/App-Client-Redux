@@ -1,18 +1,23 @@
 import React, { useContext } from "react";
 import { UidContext } from "../components/AppContext";
+import ApplyJobForm from "../components/Apply/ApplyJobForm";
 import Footer from "../components/Footer";
 import LeftNav from "../components/LeftNav";
 import Log from "../components/Log";
+import { useLocation } from "react-router-dom";
 
-const Job = () => {
+const Apply = () => {
   const uid = useContext(UidContext);
+  const location = useLocation();
+  const { state } = location;
+  console.log(state.from);
   return (
     <>
       <div className="profil-page">
         {uid ? (
           <>
             <LeftNav />
-            <h1>Job</h1>
+            <ApplyJobForm job={state.from} />
           </>
         ) : (
           <div className="log-container">
@@ -28,4 +33,4 @@ const Job = () => {
   );
 };
 
-export default Job;
+export default Apply;

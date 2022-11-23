@@ -5,6 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import Apply from "../../pages/Apply";
 import Home from "../../pages/Home";
 import Job from "../../pages/Job";
 import Profil from "../../pages/Profil";
@@ -19,6 +20,7 @@ const index = () => {
           <Route path="/" exact element={<Home />} />
           <Route path="/profil" exact element={<Profil />} />
           <Route path="/job" exact element={<Job />} />
+          <Route path="/apply" exact element={<Apply />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>

@@ -25,3 +25,7 @@ export const isEmpty = (value) => {
   );
 };
 
+export const upperCase = (word) => {
+  let newWord = word.charAt(0).toUpperCase() + word.slice(1);
+  return newWord;
+};

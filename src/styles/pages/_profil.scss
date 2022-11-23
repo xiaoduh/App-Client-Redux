@@ -3,7 +3,7 @@
   max-width: 1200px;
 
   .icons {
-    top: 55px;
+    top: 80px;
   }
 
   .log-container {
@@ -18,7 +18,7 @@
 
   .connection-form {
     border: none;
-    background: $color-4;
+    background: $color-5;
     min-width: 490px;
     width: 90%;
     text-align: center;
@@ -52,6 +52,7 @@
         }
         .active-btn {
           background: $color-1;
+          color: white;
 
           &:hover {
             background: $color-2;
@@ -84,8 +85,8 @@
         input {
           padding: 14px 20px;
           margin: 0;
-          font-size: 1.2rem;
-          font-family: $font-2;
+          font-size: 1rem;
+          font-family: $font-3;
           border-radius: 20px;
 
           &:focus {
@@ -93,7 +94,7 @@
           }
         }
         a {
-          color: rgb(62, 62, 214);
+          color: rgb(252, 252, 253);
         }
       }
     }
@@ -121,6 +122,11 @@
       }
     }
   }
+
+  .header-profil-container {
+    padding: 3rem;
+  }
+
   .update-container {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -131,7 +137,7 @@
     }
 
     > div {
-      background: $color-4;
+      background: $color-5;
       border-radius: 20px;
       padding: 25px;
       margin: 20px 10px;
@@ -143,17 +149,36 @@
     .left-part {
       text-align: center;
 
+      .toggle-container {
+        margin: 1rem auto;
+
+        .toggle {
+          font-size: 0.8rem;
+          cursor: pointer;
+          margin: 2rem 1rem;
+        }
+
+        .toggle-active {
+          color: $color-4;
+          font-size: 0.8rem;
+          cursor: pointer;
+          margin: 2rem 1rem;
+        }
+      }
+
+
+
       h3 {
         margin-bottom: 12px;
       }
 
       h5 {
-        background: $color-1;
-        color: $color-4;
-        font-family: $font-1;
+        background: $white;
+        color: $color-1;
+        font-family: $font-3;
         margin: 20px 0;
         padding: 12px;
-        font-size: 1.1rem;
+        font-size: 1rem;
         border-radius: 20px;
         transition: 0.2s;
         cursor: pointer;
@@ -164,14 +189,14 @@
         }
       }
 
-      img {
-        height: 180px;
-        width: 180px;
-        border-radius: 46px;
-        object-fit: cover;
-        margin-bottom: 30px;
-        box-shadow: 0 0 6px rgba(51, 51, 51, 0.363);
-      }
+      // img {
+      //   height: 180px;
+      //   width: 180px;
+      //   border-radius: 46px;
+      //   object-fit: cover;
+      //   margin-bottom: 30px;
+      //   box-shadow: 0 0 6px rgba(51, 51, 51, 0.363);
+      // }
       form {
         position: relative;
 
@@ -238,17 +263,19 @@
       button {
         margin: 5px 0;
         float: right;
+        font-family: $font-1;
+        color: white;
       }
       h4 {
         margin: 60px 0 10px;
       }
       h5 {
-        background: $color-1;
-        color: $color-4;
-        font-family: $font-1;
+        background: $white;
+        color: $color-1;
+        font-family: $font-3;
         margin: 20px 0;
         padding: 12px;
-        font-size: 1.1rem;
+        font-size: 1rem;
         border-radius: 20px;
         transition: 0.2s;
         cursor: pointer;
@@ -277,10 +304,11 @@
 
     .modal {
       position: absolute;
+      width: 30%;
       top: 10%;
       left: 50%;
       transform: translate(-100%);
-      background: $color-2;
+      background: $color-4;
       padding: 25px;
       border-radius: 20px;
       box-shadow: 0 0 2px rgba(131, 130, 130, 0.356);
@@ -305,6 +333,7 @@
         right: 25px;
         transition: 0.1s;
         cursor: pointer;
+        color: white;
 
         &:hover {
           transform: scale(1.07);
@@ -331,8 +360,8 @@
         }
 
         li {
-          display: grid;
-          grid-template-columns: 64px 1fr 114px;
+          // display: grid;
+          // grid-template-columns: 64px 1fr 114px;
           align-items: center;
           margin: 10px 0;
 
@@ -362,6 +391,26 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .info-generale {
+    background: $color-5;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 1rem 5rem 3rem 5rem;
+    text-align: center;
+
+    h3 {
+      padding: 1rem 0;
+    }
+
+    .chart-container {
+      text-align: center;
+
+      .chart-overview {
+        display: inline-block;
       }
     }
   }
