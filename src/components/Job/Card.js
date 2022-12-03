@@ -67,12 +67,12 @@ const Card = ({ job }) => {
                 <img src="./img/icons/envelope.svg" alt="candidature" />{" "}
                 {job.candidat.length}
               </div>
-              <div className="postuler">
-                <NavLink to="/apply" state={{ from: job }}>
+              <NavLink to="/apply" state={{ from: job }}>
+                <div className="postuler">
                   <h5>Postuler </h5>
-                </NavLink>
-                <img src="./img/icons/circle-down-solid.svg" alt="" />
-              </div>
+                  <img src="./img/icons/circle-down-solid.svg" alt="" />
+                </div>
+              </NavLink>
             </div>
           </div>
         </>

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { UidContext } from "../components/AppContext";
 
 const LeftNav = () => {
+  const uid = useContext(UidContext);
+  const userData = useSelector((state) => state.userReducer);
   return (
     <div className="left-nav-container">
       <div className="icons">
@@ -26,6 +30,21 @@ const LeftNav = () => {
           >
             <img src="./img/icons/user.svg" alt="user" />
           </NavLink>
+          {uid && userData.superAdmin ? (
+            <>
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive ? "active-left-nav" : ""
+                }
+              >
+                <img src="./img/icons/share.svg" alt="user-plus" />
+              </NavLink>
+              <br />
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

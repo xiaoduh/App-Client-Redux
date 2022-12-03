@@ -43,6 +43,7 @@ const Navbar = () => {
                     <span>Bonjour 👋,</span>&nbsp;
                     <h3 style={{ color: "#55B2FF" }}>
                       {upperCase(userData.prenom)}
+                      {userData.superAdmin ? "    👑" : ""}
                     </h3>
                   </div>
                 </NavLink>

@@ -10,6 +10,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 60% 40%;
+    height: 100vh - 27vh;
 
     @media screen and(max-width: 885px) {
       grid-template-columns: 1fr;
@@ -17,6 +18,7 @@
   }
 
   .connection-form {
+    display: grid;
     border: none;
     background: $color-5;
     min-width: 490px;
@@ -25,6 +27,7 @@
     margin: 0 auto;
     padding: 20px;
     border-radius: 20px;
+    align-items: center;
 
     @media screen and(max-width: 550px) {
       min-width: 200px;
@@ -32,7 +35,7 @@
 
     .form-container {
       display: grid;
-      grid-template-columns: 30% 70%;
+      // grid-template-columns: 30% 70%;
 
       @media screen and(max-width: 550px) {
         grid-template-columns: 1fr;
@@ -319,6 +322,25 @@
 
       h3 {
         min-width: 200px;
+        margin-bottom: 2rem;
+      }
+
+      form {
+        text-align: center;
+
+        input {
+          text-align: center;
+          padding: .5rem;
+        }
+        textarea {
+          text-align: center;
+          padding: .5rem;
+        }
+
+        button {
+          margin: 1rem 0;
+          border-radius: 20px;
+        }
       }
 
       @keyframes modal {
@@ -402,12 +424,34 @@
     margin: 1rem 5rem 3rem 5rem;
     text-align: center;
 
+    input {
+      justify-content: end;
+      padding: 14px 20px;
+      margin: 0 auto;
+      font-size: 1rem;
+      font-family: "font-3", serif;
+      background: #0D1B38;
+      color: #fdfdfd;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 1.1rem;
+      border-radius: 20px 6px 20px 20px;
+
+      &:hover {
+        background: $color-4;
+      }
+      }
+
     h3 {
       padding: 1rem 0;
     }
 
     .chart-container {
       text-align: center;
+
+       table {
+        margin: 0 auto;
+       }
 
       .chart-overview {
         display: inline-block;

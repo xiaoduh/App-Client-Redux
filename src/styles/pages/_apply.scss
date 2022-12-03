@@ -1,6 +1,40 @@
 .apply-container {
     margin: 3rem;
 
+    .content-job-desc {
+      display: inline-block;
+
+      .header-desc-job {
+        display: flex;
+        flex-direction: column;
+        margin: 2rem;
+        text-align: center;
+
+        h2 {
+          padding: 1rem;
+        }
+
+        .info-header-job {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+
+      .content-body-job {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        h3 {
+          padding: 2rem;
+        }
+
+        p {
+          padding: 1rem;
+        }
+      }
+    }
+
     .header-profil-container {
         position: relative;
         
@@ -57,6 +91,11 @@
             margin: 0 auto;
             padding: 20px;
             border-radius: 20px;
+
+            textarea {
+              padding: 1rem;
+              width: 100%;
+            }
    
     
           @media screen and(max-width: 550px) {
@@ -108,6 +147,7 @@
           }
           form {
             input {
+              width: 100%;
               padding: 14px 20px;
               margin: 0;
               font-size: 1rem;

@@ -4,6 +4,7 @@ import axios from "axios";
 export const GET_JOBS = "GET_JOBS";
 export const LIKE_JOB = "LIKE_JOB";
 export const UNLIKE_JOB = "UNLIKE_JOB";
+export const UPDATE_JOB = "UPDATE_JOB";
 
 export const getJobs = (num) => {
   return (dispatch) => {
@@ -41,6 +42,49 @@ export const unlikeJob = (jobId, userId) => {
     })
       .then((res) => {
         dispatch({ type: UNLIKE_JOB, payload: { jobId, userId } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateJob = (
+  jobId,
+  title,
+  company,
+  service,
+  projet,
+  desc,
+  profil,
+  tjm
+) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/job/` + jobId,
+      data: {
+        titre: title,
+        entreprise: company,
+        service: service,
+        projet: projet,
+        description: desc,
+        profil: profil,
+        tjm: tjm,
+      },
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_JOB,
+          payload: {
+            jobId,
+            title,
+            company,
+            service,
+            projet,
+            desc,
+            profil,
+            tjm,
+          },
+        });
       })
       .catch((err) => console.log(err));
   };

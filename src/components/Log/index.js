@@ -6,20 +6,20 @@ const Log = (props) => {
   const [signUpModal, setSignUpModal] = useState(props.signup);
   const [signInModal, setSignInModal] = useState(props.signin);
 
-  const handleModals = (e) => {
-    if (e.target.id === "register") {
-      setSignInModal(false);
-      setSignUpModal(true);
-    } else if (e.target.id === "login") {
-      setSignUpModal(false);
-      setSignInModal(true);
-    }
-  };
+  // const handleModals = (e) => {
+  //   if (e.target.id === "register") {
+  //     setSignInModal(false);
+  //     setSignUpModal(true);
+  //   } else if (e.target.id === "login") {
+  //     setSignUpModal(false);
+  //     setSignInModal(true);
+  //   }
+  // };
 
   return (
     <div className="connection-form">
       <div className="form-container">
-        <ul>
+        {/* <ul>
           <li
             onClick={handleModals}
             id="register"
@@ -34,7 +34,7 @@ const Log = (props) => {
           >
             Se connecter
           </li>
-        </ul>
+        </ul> */}
         {signUpModal && <SignUpForm />}
         {signInModal && <SignInForm />}
       </div>

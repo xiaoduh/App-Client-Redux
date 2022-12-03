@@ -1,22 +1,25 @@
 import React, { useContext } from "react";
 import { UidContext } from "../components/AppContext";
 import Footer from "../components/Footer";
-import LeftNav from "../components/LeftNav";
 import Log from "../components/Log";
-import Thread from "../components/Thread";
+import JobManagement from "../components/Admin/jobManagement";
+import UsersManagement from "../components/Admin/UsersManagement"
+import { useSelector } from "react-redux";
+import CompanyManagement from "../components/Admin/CompanyManagement";
 
-const Home = () => {
+const Admin = () => {
   const uid = useContext(UidContext);
+  const userData = useSelector((state) => state.userReducer);
+  console.log(userData.superAdmin);
   return (
     <>
       <div className="profil-page">
-        {uid ? (
-          <div className="home">
-            <LeftNav />
-            <div className="main">
-              <Thread />
-            </div>
-          </div>
+        {uid && userData.superAdmin ? (
+          <>
+            <JobManagement />
+            <UsersManagement />
+            <CompanyManagement />
+          </>
         ) : (
           <div className="log-container">
             <Log signin={true} signup={false} />
@@ -31,4 +34,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Admin;

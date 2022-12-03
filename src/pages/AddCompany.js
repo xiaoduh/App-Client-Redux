@@ -1,22 +1,18 @@
 import React, { useContext } from "react";
+import { useSelector } from "react-redux";
 import { UidContext } from "../components/AppContext";
 import Footer from "../components/Footer";
-import LeftNav from "../components/LeftNav";
 import Log from "../components/Log";
-import Thread from "../components/Thread";
 
-const Home = () => {
+const AddCompany = () => {
+  const userData = useSelector((state) => state.userReducer);
   const uid = useContext(UidContext);
+
   return (
     <>
       <div className="profil-page">
-        {uid ? (
-          <div className="home">
-            <LeftNav />
-            <div className="main">
-              <Thread />
-            </div>
-          </div>
+        {uid && userData.superAdmin ? (
+          <>form add company</>
         ) : (
           <div className="log-container">
             <Log signin={true} signup={false} />
@@ -31,4 +27,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AddCompany;

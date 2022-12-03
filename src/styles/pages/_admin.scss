@@ -1,0 +1,41 @@
+.chart-container {
+
+    table {
+        // border: 1px solid $color-1;
+        border-radius: 20px;
+        padding: 2rem;
+        position: relative;
+
+
+        .edit-tr {
+            cursor: pointer;
+
+            &:hover {
+                font-size: 1.1rem;
+            }
+        }
+
+        thead {
+            color: $color-4;
+            box-shadow: 0px 1px 0px $color-1;
+
+        }
+
+        tbody {
+
+            tr:first-child {
+                padding-top: 2rem;
+            }
+
+            tr {
+                box-shadow: 0px 1px 0px $color-1;
+            }
+
+            td {
+                padding-top: 1rem;
+                padding-right: 1rem;
+            }
+
+        }
+    }
+}
