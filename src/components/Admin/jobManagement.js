@@ -11,7 +11,7 @@ const JobManagement = () => {
   const [jobIsLoading, setJobIsLoading] = useState(true);
   const [companyIsLoading, setCompanyIsLoading] = useState(true);
   const [editJobPopup, setEditJobPopup] = useState(false);
-  const [jobToEdit, setJobToEdit] = useState("");
+  const [jobToEdit, setJobToEdit] = useState(null);
   const [titreUpdate, setTitreUpdate] = useState(null);
   const [entrepriseUpdate, setEntrepriseUpdate] = useState(null);
   const [serviceUpdate, setServiceUpdate] = useState(null);

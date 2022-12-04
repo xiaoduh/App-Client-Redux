@@ -12,7 +12,8 @@ const AddCompany = () => {
     <>
       <div className="profil-page">
         {uid && userData.superAdmin ? (
-          <>form add company</>
+          <div className="form-container">
+          </div>
         ) : (
           <div className="log-container">
             <Log signin={true} signup={false} />

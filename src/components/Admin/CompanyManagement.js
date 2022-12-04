@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNewCompany,
+  getCompany,
+  updateCompany,
+} from "../../actions/company.actions";
 import { isEmpty, dateParser } from "../utils";
 
 const CompanyManagement = () => {
+  const [loadCompany, setLoadCompany] = useState(true);
   const [userIsLoading, setUserIsLoading] = useState(true);
   const [jobIsLoading, setJobIsLoading] = useState(true);
   const [companyIsLoading, setCompanyIsLoading] = useState(true);
   const [editCompanyPopup, setEditCompanyPopup] = useState(false);
+  const [addCompanyPopup, setAddCompanyPopup] = useState(false);
   const [companyToEdit, setCompanyToEdit] = useState(null);
+  const [nomUpdate, setNomUpdate] = useState(null);
+  const [secteurUpdate, setSecteurUpdate] = useState(null);
+  const [localisationUpdate, setLocalisationUpdate] = useState(null);
+  const [descriptionUpdate, setDescriptionUpdate] = useState(null);
+  const [videoUpdate, setVideoUpdate] = useState(null);
+  const [nomNewCompany, setNomNewCompany] = useState("");
+  const [secteurNewCompany, setSecteurNewCompany] = useState("");
+  const [localisationNewCompany, setLocalisationNewCompany] = useState("");
+  const [descriptionNewCompany, setDescriptionNewCompany] = useState("");
+  const [videoNewCompany, setVideoNewCompany] = useState("");
   const userData = useSelector((state) => state.userReducer);
   const jobs = useSelector((state) => state.jobReducer);
   const companies = useSelector((state) => state.companyReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     !isEmpty(userData) && setUserIsLoading(false);
@@ -25,9 +42,65 @@ const CompanyManagement = () => {
     !isEmpty(companies) && setCompanyIsLoading(false);
   }, [companies]);
 
+  useEffect(() => {
+    if (loadCompany) {
+      dispatch(getCompany());
+      setLoadCompany(false);
+    }
+  }, [loadCompany]);
+
   const handleEditCompany = (company) => {
     setCompanyToEdit(company);
+    setNomUpdate(company.nom);
+    setSecteurUpdate(company.secteur);
+    setLocalisationUpdate(company.localisation);
+    setDescriptionUpdate(company.description);
+    setVideoUpdate(company.video);
     setEditCompanyPopup(true);
+  };
+
+  const handleModificationForm = () => {
+    if (
+      nomUpdate ||
+      secteurUpdate ||
+      localisationUpdate ||
+      descriptionUpdate ||
+      videoUpdate
+    ) {
+      dispatch(
+        updateCompany(
+          companyToEdit._id,
+          nomUpdate,
+          secteurUpdate,
+          localisationUpdate,
+          descriptionUpdate,
+          videoUpdate
+        )
+      );
+    }
+    setEditCompanyPopup(false);
+  };
+
+  const handleAddNewCompanyForm = () => {
+    if (
+      nomNewCompany &&
+      secteurNewCompany &&
+      localisationNewCompany &&
+      descriptionNewCompany &&
+      videoNewCompany
+    ) {
+      dispatch(
+        addNewCompany(
+          nomNewCompany,
+          secteurNewCompany,
+          localisationNewCompany,
+          descriptionNewCompany,
+          videoNewCompany
+        )
+      );
+      setAddCompanyPopup(false);
+      setLoadCompany(true);
+    }
   };
   return (
     <>
@@ -39,9 +112,11 @@ const CompanyManagement = () => {
             <h1> Gestion des entreprises 🏭</h1>
           </div>
           <div className="info-generale">
-            <NavLink to="/add-company">
-              <input type="button" value="Ajouter une entreprise" />
-            </NavLink>
+            <input
+              type="button"
+              value="Ajouter une entreprise"
+              onClick={() => setAddCompanyPopup(true)}
+            />
             <div className="chart-container">
               <h3>Tableaux des entreprises</h3>
               <table>
@@ -96,7 +171,147 @@ const CompanyManagement = () => {
             <span className="cross" onClick={() => setEditCompanyPopup(false)}>
               &#10005;
             </span>
-            <ul></ul>
+            <form
+              action=""
+              id="edit-form"
+              onSubmit={() =>
+                handleModificationForm(
+                  companyToEdit._id,
+                  nomUpdate,
+                  secteurUpdate,
+                  localisationUpdate,
+                  descriptionUpdate,
+                  videoUpdate
+                )
+              }
+            >
+              <label htmlFor="nom">Nom</label>
+              <br />
+              <input
+                type="text"
+                name="nom"
+                id="nom"
+                defaultValue={companyToEdit.nom}
+                onChange={(e) => setNomUpdate(e.target.value)}
+              />
+              <br />
+              <label htmlFor="secteur">Secteur</label>
+              <br />
+              <input
+                type="text"
+                name="secteur"
+                id="secteur"
+                defaultValue={companyToEdit.secteur}
+                onChange={(e) => setSecteurUpdate(e.target.value)}
+              />
+              <br />
+              <label htmlFor="localisation">Localisation</label>
+              <br />
+              <input
+                type="text"
+                name="localisation"
+                id="localisation"
+                defaultValue={companyToEdit.localisation}
+                onChange={(e) => setLocalisationUpdate(e.target.value)}
+              />
+              <br />
+              <label htmlFor="description">Description</label>
+              <br />
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                defaultValue={companyToEdit.description}
+                onChange={(e) => setDescriptionUpdate(e.target.value)}
+              />
+              <br />
+              <label htmlFor="video">Vidéo</label>
+              <br />
+              <input
+                type="text"
+                name="video"
+                id="video"
+                defaultValue={companyToEdit.video}
+                onChange={(e) => setVideoUpdate(e.target.value)}
+              />
+              <br />
+              <button type="submit">Valider mes modification</button>
+            </form>
+          </div>
+        </div>
+      )}
+      {addCompanyPopup && (
+        <div className="popup-profil-container">
+          <div className="modal">
+            <h3>Ajouter une entreprise</h3>
+            <span className="cross" onClick={() => setAddCompanyPopup(false)}>
+              &#10005;
+            </span>
+            <form
+              action=""
+              id="edit-form"
+              onSubmit={() =>
+                handleAddNewCompanyForm(
+                  nomNewCompany,
+                  secteurNewCompany,
+                  localisationNewCompany,
+                  descriptionNewCompany,
+                  videoNewCompany
+                )
+              }
+            >
+              <label htmlFor="nom">Nom</label>
+              <br />
+              <input
+                type="text"
+                name="nom"
+                id="nom"
+                placeholder="Nom de l'entreprise"
+                onChange={(e) => setNomNewCompany(e.target.value)}
+              />
+              <br />
+              <label htmlFor="secteur">Secteur</label>
+              <br />
+              <input
+                type="text"
+                name="secteur"
+                id="secteur"
+                placeholder="Secteur de l'entreprise"
+                onChange={(e) => setSecteurNewCompany(e.target.value)}
+              />
+              <br />
+              <label htmlFor="localisation">Localisation</label>
+              <br />
+              <input
+                type="text"
+                name="localisation"
+                id="localisation"
+                placeholder="Localisation de l'entreprise"
+                onChange={(e) => setLocalisationNewCompany(e.target.value)}
+              />
+              <br />
+              <label htmlFor="description">Description</label>
+              <br />
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                placeholder="Description de l'entreprise"
+                onChange={(e) => setDescriptionNewCompany(e.target.value)}
+              />
+              <br />
+              <label htmlFor="video">Vidéo</label>
+              <br />
+              <input
+                type="text"
+                name="video"
+                id="video"
+                placeholder="Vidéo de présentation de l'entreprise"
+                onChange={(e) => setVideoNewCompany(e.target.value)}
+              />
+              <br />
+              <button type="submit">Ajouter</button>
+            </form>
           </div>
         </div>
       )}

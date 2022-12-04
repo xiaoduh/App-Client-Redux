@@ -68,6 +68,7 @@ const UsersManagement = () => {
         )
       );
     }
+    console.log(typeof salaireUpdate);
     setEditUserPopup(false);
   };
 
@@ -217,7 +218,7 @@ const UsersManagement = () => {
                 name="salaire"
                 id="salaire"
                 defaultValue={userToEdit.salary}
-                onChange={(e) => setSalaireUpdate(e.target.value)}
+                onChange={(e) => setSalaireUpdate(parseInt(e.target.value))}
               />
               <br />
               <button type="submit">Valider mes modification</button>

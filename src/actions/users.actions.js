@@ -26,7 +26,7 @@ export function updateUser(
   return (dispatch) => {
     return axios({
       method: "put",
-      url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+      url: `${process.env.REACT_APP_API_URL}api/user/edit-user/` + userId,
       data: {
         identifiant: identifiant,
         nom: nom,

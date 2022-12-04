@@ -7,13 +7,33 @@ import LikeButton from "./LikeButton";
 const Card = ({ job }) => {
   const [isLoading, setIsLoading] = useState(true);
   // const [isApply, setIsApply] = useState(false);
+  const [video, setVideo] = useState(null);
   const usersData = useSelector((state) => state.usersReducer);
   const jobData = useSelector((state) => state.jobReducer);
   const companiesData = useSelector((state) => state.companyReducer);
 
+  const handleVideo = () => {
+    {
+      !isEmpty(companiesData[0]) &&
+        companiesData.map((company) => {
+          if (company._id === job.companyId) {
+            let findLink = company.video;
+            if (
+              findLink.includes("https://www.yout") ||
+              findLink.includes("https://yout")
+            ) {
+              let embed = findLink.replace("watch?v=", "embed/");
+              setVideo(embed.split("&")[0]);
+            }
+          }
+        });
+    }
+  };
+
   useEffect(() => {
     !isEmpty(companiesData[0] && jobData[0] && usersData[0]) &&
       setIsLoading(false);
+    handleVideo();
   }, [usersData, jobData, companiesData]);
 
   return (
@@ -59,6 +79,15 @@ const Card = ({ job }) => {
                     .join("")}
               </h6>
             </div>
+            {video && (
+              <iframe
+                src={video}
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-wrtite; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={video}
+              ></iframe>
+            )}
             <div className="card-footer">
               <div className="comment-icon">
                 <LikeButton job={job} />
