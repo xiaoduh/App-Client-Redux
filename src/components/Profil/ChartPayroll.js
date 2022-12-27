@@ -21,7 +21,7 @@ const ChartPayroll = () => {
 
     if (usersData.length > 0) {
       for (let i = 0; i < usersData.length; i++) {
-        sumPayroll += parseInt(usersData[i].salary);
+        sumPayroll += parseInt(usersData[i].salaire);
       }
       chartData.push({
         name: "Masse salariale brut",

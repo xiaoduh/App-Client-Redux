@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewCompany,
+  deleteCompany,
   getCompany,
   updateCompany,
 } from "../../actions/company.actions";
@@ -12,19 +13,23 @@ const CompanyManagement = () => {
   const [userIsLoading, setUserIsLoading] = useState(true);
   const [jobIsLoading, setJobIsLoading] = useState(true);
   const [companyIsLoading, setCompanyIsLoading] = useState(true);
+
   const [editCompanyPopup, setEditCompanyPopup] = useState(false);
   const [addCompanyPopup, setAddCompanyPopup] = useState(false);
+
   const [companyToEdit, setCompanyToEdit] = useState(null);
   const [nomUpdate, setNomUpdate] = useState(null);
   const [secteurUpdate, setSecteurUpdate] = useState(null);
   const [localisationUpdate, setLocalisationUpdate] = useState(null);
   const [descriptionUpdate, setDescriptionUpdate] = useState(null);
   const [videoUpdate, setVideoUpdate] = useState(null);
+
   const [nomNewCompany, setNomNewCompany] = useState("");
   const [secteurNewCompany, setSecteurNewCompany] = useState("");
   const [localisationNewCompany, setLocalisationNewCompany] = useState("");
   const [descriptionNewCompany, setDescriptionNewCompany] = useState("");
   const [videoNewCompany, setVideoNewCompany] = useState("");
+
   const userData = useSelector((state) => state.userReducer);
   const jobs = useSelector((state) => state.jobReducer);
   const companies = useSelector((state) => state.companyReducer);
@@ -87,7 +92,7 @@ const CompanyManagement = () => {
       secteurNewCompany &&
       localisationNewCompany &&
       descriptionNewCompany &&
-      videoNewCompany
+      videoNewCompany !== null
     ) {
       dispatch(
         addNewCompany(
@@ -101,6 +106,10 @@ const CompanyManagement = () => {
       setAddCompanyPopup(false);
       setLoadCompany(true);
     }
+  };
+
+  const handleDeleteCompany = (companyId) => {
+    dispatch(deleteCompany(companyId));
   };
   return (
     <>
@@ -118,7 +127,7 @@ const CompanyManagement = () => {
               onClick={() => setAddCompanyPopup(true)}
             />
             <div className="chart-container">
-              <h3>Tableaux des entreprises</h3>
+              <h3>Tableaux des entreprises ({companies.length})</h3>
               <table>
                 <thead>
                   <tr>
@@ -135,24 +144,40 @@ const CompanyManagement = () => {
                     companies.map((company) => {
                       return (
                         <>
-                          <tr company={company} key={company._id}>
+                          <tr key={company._id}>
                             {" "}
-                            <td>
+                            <td key={Math.random()}>
                               {company._id.slice(
                                 company._id.length - 4,
                                 company._id.length
                               )}
                             </td>
-                            <td>{company.nom}</td>
-                            <td>{company.secteur}</td>
-                            <td>{company.localisation}</td>
-                            <td>{company.jobs.length}</td>
-                            <td>{dateParser(company.createdAt)}</td>
+                            <td key={Math.random()}>{company.nom}</td>
+                            <td key={Math.random()}>{company.secteur}</td>
+                            <td key={Math.random()}>{company.localisation}</td>
+                            <td key={Math.random()}>{company.jobs.length}</td>
+                            <td key={Math.random()}>
+                              {dateParser(company.createdAt)}
+                            </td>
                             <td
                               className="edit-tr"
                               onClick={() => handleEditCompany(company)}
                             >
-                              ✏️
+                              <img src="./img/icons/edit.svg" alt="" />
+                            </td>
+                            <td
+                              className="edit-tr"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Voulez-vous supprimer cette entreprise ?"
+                                  )
+                                ) {
+                                  handleDeleteCompany(company._id);
+                                }
+                              }}
+                            >
+                              <img src="./img/icons/trash.svg" alt="" />
                             </td>
                           </tr>
                         </>
@@ -310,7 +335,15 @@ const CompanyManagement = () => {
                 onChange={(e) => setVideoNewCompany(e.target.value)}
               />
               <br />
-              <button type="submit">Ajouter</button>
+              {nomNewCompany &&
+              secteurNewCompany &&
+              localisationNewCompany &&
+              descriptionNewCompany &&
+              videoNewCompany ? (
+                <button type="submit">Ajouter</button>
+              ) : (
+                ""
+              )}
             </form>
           </div>
         </div>

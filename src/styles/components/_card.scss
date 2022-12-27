@@ -70,9 +70,14 @@
 
       .pseudo {
         display: flex;
+        flex-direction: column;
 
         h3 {
           font-size: 1.4rem;
+        }
+
+        h4 {
+          color: $color-4;
         }
 
         @media screen and(max-width: 590px) {
@@ -190,7 +195,7 @@
       align-items: center;
       justify-content: center;
       justify-content: space-between;
-      padding: 12px 0 4px;
+      padding: 12px 0 24px;
 
       .postuler {
         display: flex; 

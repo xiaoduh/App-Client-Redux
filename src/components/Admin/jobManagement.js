@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { getJobs, updateJob } from "../../actions/job.actions";
+import {
+  addJob,
+  deleteJob,
+  getJobs,
+  updateJob,
+} from "../../actions/job.actions";
 import { useDispatch, useSelector } from "react-redux";
 import LeftNav from "../LeftNav";
-import { NavLink } from "react-router-dom";
 import { isEmpty, dateParser } from "../utils";
 
 const JobManagement = () => {
@@ -10,7 +14,10 @@ const JobManagement = () => {
   const [userIsLoading, setUserIsLoading] = useState(true);
   const [jobIsLoading, setJobIsLoading] = useState(true);
   const [companyIsLoading, setCompanyIsLoading] = useState(true);
+
   const [editJobPopup, setEditJobPopup] = useState(false);
+  const [addNewJobPopup, setAddNewJobPopup] = useState(false);
+
   const [jobToEdit, setJobToEdit] = useState(null);
   const [titreUpdate, setTitreUpdate] = useState(null);
   const [entrepriseUpdate, setEntrepriseUpdate] = useState(null);
@@ -19,6 +26,16 @@ const JobManagement = () => {
   const [descriptionUpdate, setDescriptionUpdate] = useState(null);
   const [profilUpdate, setProfilUpdate] = useState(null);
   const [tjmUpdate, setTjmUpdate] = useState(null);
+
+  const [titreNewJob, setTitreNewJob] = useState(null);
+  const [entrepriseNewJob, setEntrepriseNewJob] = useState(null);
+  const [serviceNewJob, setServiceNewJob] = useState(null);
+  const [projetNewJob, setProjetNewJob] = useState(null);
+  const [descriptionNewJob, setDescriptionNewJob] = useState(null);
+  const [skillNewJob, setSkillNewJob] = useState(null);
+  const [profilNewJob, setProfilNewJob] = useState(null);
+  const [tjmNewJob, setTjmNewJob] = useState(null);
+
   const userData = useSelector((state) => state.userReducer);
   const jobs = useSelector((state) => state.jobReducer);
   const companies = useSelector((state) => state.companyReducer);
@@ -46,50 +63,96 @@ const JobManagement = () => {
   const handleEditJob = (job) => {
     setJobToEdit(job);
     setTitreUpdate(job.titre);
-    setEntrepriseUpdate(job.entreprise);
     setServiceUpdate(job.service);
     setProjetUpdate(job.projet);
     setDescriptionUpdate(job.description);
     setProfilUpdate(job.profil);
     setTjmUpdate(job.tjm);
+    companies.map((company) => {
+      if (company._id === jobToEdit.companyId) {
+        setEntrepriseUpdate(company.nom);
+      }
+    });
     setEditJobPopup(true);
   };
 
-  const handleModificationForm = () => {
+  const handleNewJob = async (
+    titre,
+    companyId,
+    service,
+    projet,
+    description,
+    competence,
+    profil,
+    tjm
+  ) => {
     if (
-      titreUpdate ||
-      entrepriseUpdate ||
-      serviceUpdate ||
-      projetUpdate ||
-      descriptionUpdate ||
-      tjmUpdate ||
-      profilUpdate
+      titre &&
+      companyId &&
+      service &&
+      projet &&
+      description &&
+      competence &&
+      profil &&
+      tjm
+    ) {
+      await dispatch(
+        addJob(
+          titre,
+          companyId,
+          service,
+          projet,
+          description,
+          competence,
+          profil,
+          tjm
+        )
+      );
+      dispatch(getJobs());
+    }
+    setAddNewJobPopup(true);
+  };
+
+  const handleModificationForm = (
+    jobToEdit,
+    titre,
+    service,
+    projet,
+    description,
+    profil,
+    tjm
+  ) => {
+    if (
+      jobToEdit &&
+      titre &&
+      service &&
+      projet &&
+      description &&
+      profil &&
+      tjm
     ) {
       dispatch(
-        updateJob(
-          jobToEdit._id,
-          titreUpdate,
-          entrepriseUpdate,
-          serviceUpdate,
-          projetUpdate,
-          descriptionUpdate,
-          profilUpdate,
-          tjmUpdate
-        )
+        updateJob(jobToEdit, titre, service, projet, description, profil, tjm)
       );
     }
     setEditJobPopup(false);
   };
 
-  // console.log(
-  //   titreUpdate,
-  //   entrepriseUpdate,
-  //   serviceUpdate,
-  //   projetUpdate,
-  //   descriptionUpdate,
-  //   tjmUpdate,
-  //   profilUpdate
-  // );
+  const cancelAddNewJob = () => {
+    setTitreNewJob(null);
+    setEntrepriseNewJob(null);
+    setServiceNewJob(null);
+    setProjetNewJob(null);
+    setDescriptionNewJob(null);
+    setSkillNewJob(null);
+    setProfilNewJob(null);
+    setTjmNewJob(null);
+    setAddNewJobPopup(false);
+  };
+
+  const handleDeleteJob = (jobId) => {
+    dispatch(deleteJob(jobId));
+  };
 
   return (
     <>
@@ -102,11 +165,13 @@ const JobManagement = () => {
             <h1> Gestion des offres 📁 </h1>
           </div>
           <div className="info-generale">
-            <NavLink to="/add-job">
-              <input type="button" value="Ajouter une mission" />
-            </NavLink>
+            <input
+              type="button"
+              value="Ajouter une mission"
+              onClick={() => setAddNewJobPopup(true)}
+            />
             <div className="chart-container">
-              <h3>Tableaux des offres actives</h3>
+              <h3>Tableaux des offres actives ({jobs.length})</h3>
               <table>
                 <thead>
                   <tr>
@@ -134,7 +199,11 @@ const JobManagement = () => {
                               )}
                             </td>
                             <td>{job.titre}</td>
-                            <td>{job.entreprise}</td>
+                            {companies.map((company) => {
+                              if (company._id === job.companyId) {
+                                return <td>{company.nom}</td>;
+                              }
+                            })}
                             <td>{job.service}</td>
                             <td>{job.projet}</td>
                             <td>{job.tjm}</td>
@@ -144,7 +213,21 @@ const JobManagement = () => {
                               className="edit-tr"
                               onClick={() => handleEditJob(job)}
                             >
-                              ✏️
+                              <img src="./img/icons/edit.svg" alt="" />
+                            </td>
+                            <td
+                              className="edit-tr"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Voulez-vous supprimer cette mission ?"
+                                  )
+                                ) {
+                                  handleDeleteJob(job._id);
+                                }
+                              }}
+                            >
+                              <img src="./img/icons/trash.svg" alt="" />
                             </td>
                           </tr>
                         </>
@@ -176,7 +259,6 @@ const JobManagement = () => {
                 handleModificationForm(
                   jobToEdit._id,
                   titreUpdate,
-                  entrepriseUpdate,
                   serviceUpdate,
                   projetUpdate,
                   descriptionUpdate,
@@ -195,16 +277,16 @@ const JobManagement = () => {
                 onChange={(e) => setTitreUpdate(e.target.value)}
               />
               <br />
-              <label htmlFor="entreprise">Entreprise</label>
+              {/* <label htmlFor="entreprise">Entreprise</label>
               <br />
               <input
                 type="text"
                 name="entreprise"
                 id="entreprise"
-                defaultValue={jobToEdit.entreprise}
-                onChange={(e) => setEntrepriseUpdate(e.target.value)}
+                defaultValue={entrepriseUpdate}
+                readonly="readonly"
               />
-              <br />
+              <br /> */}
               <label htmlFor="service">Service</label>
               <br />
               <input
@@ -256,6 +338,135 @@ const JobManagement = () => {
               />
               <br />
               <button type="submit">Valider mes modification</button>
+            </form>
+          </div>
+        </div>
+      )}
+      {addNewJobPopup && (
+        <div className="popup-profil-container">
+          <div className="modal">
+            <h3>Ajouter une mission</h3>
+            <span className="cross" onClick={() => cancelAddNewJob()}>
+              &#10005;
+            </span>
+            <form
+              action=""
+              id="edit-form"
+              onSubmit={() =>
+                handleNewJob(
+                  titreNewJob,
+                  entrepriseNewJob,
+                  serviceNewJob,
+                  projetNewJob,
+                  descriptionNewJob,
+                  skillNewJob,
+                  profilNewJob,
+                  tjmNewJob
+                )
+              }
+            >
+              <label htmlFor="name">Titre</label>
+              <br />
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Titre de l'annonce"
+                required
+                onChange={(e) => setTitreNewJob(e.target.value)}
+              />
+              <br />
+              <label htmlFor="entreprise">Entreprise</label>
+              <br />
+              <select
+                onChange={(e) => setEntrepriseNewJob(e.target.value)}
+                required
+              >
+                <option value={null}>Selectionner une entreprise</option>
+                {companies &&
+                  companies.map((company) => {
+                    return <option value={company._id}>{company.nom}</option>;
+                  })}
+              </select>
+              <br />
+              <label htmlFor="service">Service</label>
+              <br />
+              <input
+                type="text"
+                name="service"
+                id="service"
+                placeholder="Description du service"
+                required
+                onChange={(e) => setServiceNewJob(e.target.value)}
+              />
+              <br />
+              <label htmlFor="projet">Projet</label>
+              <br />
+              <input
+                type="text"
+                name="projet"
+                id="projet"
+                placeholder="Description du projet"
+                required
+                onChange={(e) => setProjetNewJob(e.target.value)}
+              />
+              <br />
+              <label htmlFor="description">Description</label>
+              <br />
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                placeholder="Description de la mission"
+                required
+                onChange={(e) => setDescriptionNewJob(e.target.value)}
+              />
+              <br />
+              <label htmlFor="skill">Compétences clées</label>
+              <br />
+              <input
+                type="text"
+                name="skill"
+                id="skill"
+                placeholder="Compétences recherchées"
+                required
+                onChange={(e) => setSkillNewJob(e.target.value)}
+              />
+              <br />
+              <label htmlFor="profil">Profil recherché</label>
+              <br />
+              <input
+                type="text"
+                name="profil"
+                id="profil"
+                placeholder="Profil recherché"
+                required
+                onChange={(e) => setProfilNewJob(e.target.value)}
+              />
+              <br />
+              <label htmlFor="tjm">TJM</label>
+              <br />
+              <input
+                type="text"
+                name="tjm"
+                id="tjm"
+                placeholder="TJM ciblé"
+                required
+                onChange={(e) => setTjmNewJob(e.target.value)}
+              />
+              <br />
+              {(titreNewJob !== null || "") &&
+              (entrepriseNewJob !== null || "") &&
+              (serviceNewJob !== null || "") &&
+              (projetNewJob !== null || "") &&
+              (descriptionNewJob !== null || "") &&
+              (skillNewJob !== null || "") &&
+              (profilNewJob !== null || "") &&
+              (tjmNewJob !== null || "") ? (
+                <button type="submit">Ajouter</button>
+              ) : (
+                ""
+              )}
             </form>
           </div>
         </div>

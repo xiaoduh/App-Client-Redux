@@ -2,6 +2,7 @@ import {
   ADDNEW_COMPANY,
   GET_COMPANY,
   UPDATE_COMPANY,
+  DELETE_COMPANY,
 } from "../actions/company.actions";
 
 const initialState = {};
@@ -27,6 +28,11 @@ export default function companyReducer(state = initialState, action) {
           };
         } else return company;
       });
+
+    case DELETE_COMPANY:
+      return state.filter(
+        (company) => company._id !== action.payload.companyId
+      );
 
     default:
       return state;

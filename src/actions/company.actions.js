@@ -4,6 +4,7 @@ import axios from "axios";
 export const GET_COMPANY = "GET_COMPANY";
 export const UPDATE_COMPANY = "UPDATE_COMPANY";
 export const ADDNEW_COMPANY = "ADDNEW_COMPANY";
+export const DELETE_COMPANY = "DELETE_COMPANY";
 
 export const getCompany = () => {
   return (dispatch) => {
@@ -87,3 +88,16 @@ export const addNewCompany = (
       .catch((err) => console.log(err));
   };
 };
+
+export function deleteCompany(companyId) {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_URL}api/company/${companyId}`,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_COMPANY, payload: { companyId } });
+      })
+      .catch((err) => console.log(err));
+  };
+}

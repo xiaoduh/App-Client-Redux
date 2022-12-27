@@ -1,4 +1,4 @@
-import { GET_USERS, UPDATE_USER } from "../actions/users.actions";
+import { GET_USERS, UPDATE_USER, DELETE_USER } from "../actions/users.actions";
 
 const initialState = {};
 
@@ -17,10 +17,13 @@ export default function userReducer(state = initialState, action) {
             prenom: action.payload.prenom,
             email: action.payload.email,
             fonction: action.payload.fonction,
-            salary: action.payload.salaire,
+            salaire: action.payload.salaire,
           };
         } else return user;
       });
+
+    case DELETE_USER:
+      return state.filter((user) => user._id !== action.payload.userId);
 
     default:
       return state;

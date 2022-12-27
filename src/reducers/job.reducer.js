@@ -1,4 +1,5 @@
 import {
+  DELETE_JOB,
   GET_JOBS,
   LIKE_JOB,
   UNLIKE_JOB,
@@ -49,6 +50,9 @@ export default function jobReducer(state = initialState, action) {
           };
         } else return job;
       });
+
+    case DELETE_JOB:
+      return state.filter((job) => job._id !== action.payload.jobId);
 
     default:
       return state;

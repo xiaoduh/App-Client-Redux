@@ -46,11 +46,15 @@ const Card = ({ job }) => {
           <div className="card-right">
             <div className="card-header">
               <div className="pseudo">
-                <h3>
-                  {upperCase(job.titre)} pour {upperCase(job.entreprise)}
-                </h3>
+                <h3>{upperCase(job.titre)}</h3>
+                <h4>
+                  {!isEmpty(companiesData[0]) &&
+                    companiesData.map((company) => {
+                      if (company._id === job.companyId) return company.nom;
+                    })}
+                </h4>
               </div>
-              <h6>
+              {/* <h6>
                 publié par :{" "}
                 <span>
                   {!isEmpty(usersData[0]) &&
@@ -61,7 +65,7 @@ const Card = ({ job }) => {
                       })
                       .join("")}
                 </span>
-              </h6>
+              </h6> */}
               <h6>le {dateParser(job.createdAt)}</h6>
             </div>
             <div className="card-footer">

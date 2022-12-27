@@ -18,7 +18,7 @@ const LeftNav = () => {
           </NavLink>
           <br />
           <NavLink
-            to="/Job"
+            to="/Data"
             className={({ isActive }) => (isActive ? "active-left-nav" : "")}
           >
             <img src="./img/icons/rocket.svg" alt="rocket" />

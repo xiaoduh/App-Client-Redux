@@ -29,8 +29,8 @@ const UpdateProfil = () => {
     !isEmpty(userData) && setIsLoading(false);
   }, [userData]);
 
-  const myCost = Math.floor((userData.salary * 1.6) / 182);
-  const myTjm = Math.floor((userData.salary * 1.6) / 182) * 1.25;
+  const myCost = Math.floor((userData.salaire * 1.6) / 182);
+  const myTjm = Math.floor((userData.salaire * 1.6) / 182) * 1.25;
 
   const handleUpdate = () => {
     dispatch(updateBio(userData._id, bio));
@@ -83,8 +83,8 @@ const UpdateProfil = () => {
                 Mon salaire :{" "}
                 <span style={{ color: "#f6bd60" }}>
                   {toggleYearly
-                    ? userData.salary
-                    : Math.round(userData.salary / 182)}
+                    ? userData.salaire
+                    : Math.round(userData.salaire / 182)}
                 </span>
                 <span>{toggleYearly ? " € par an" : " € par jour"}</span>
               </h5>
@@ -215,9 +215,9 @@ const UpdateProfil = () => {
                       for (let i = 0; i < jobData.length; i++) {
                         if (candidature === jobData[i]._id) {
                           return <li>{upperCase(jobData[i].titre)}</li>;
-                        }
+                        } else return null;
                       }
-                    } else return <li>{none}</li>;
+                    } else return null;
                   })}
                 </ul>
               </div>

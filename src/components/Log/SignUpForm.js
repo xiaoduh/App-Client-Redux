@@ -10,7 +10,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [fonction, setFonction] = useState("");
-  const [salary, setSalary] = useState("");
+  const [salaire, setSalaire] = useState("");
   const [password, setPassword] = useState("");
   const [controlPassword, setControlPassword] = useState("");
 
@@ -21,7 +21,7 @@ const SignUp = () => {
     const nomError = document.querySelector(".nom.error");
     const prenomError = document.querySelector(".prenom.error");
     const fonctionError = document.querySelector(".fonction.error");
-    const salaryError = document.querySelector(".salary.error");
+    const salaireError = document.querySelector(".salaire.error");
     const emailError = document.querySelector(".email.error");
     const telError = document.querySelector(".tel.error");
     const passwordError = document.querySelector(".password.error");
@@ -52,7 +52,7 @@ const SignUp = () => {
           tel,
           password,
           fonction,
-          salary,
+          salaire,
         },
       })
         .then((res) => {
@@ -65,7 +65,7 @@ const SignUp = () => {
             telError.innerHTML = res.data.errors.tel;
             passwordError.innerHTML = res.data.errors.password;
             fonctionError.innerHTML = res.data.errors.fonction;
-            salaryError.innerHTML = res.data.errors.salary;
+            salaireError.innerHTML = res.data.errors.salaire;
           } else {
             setFormSubmit(true);
           }
@@ -139,16 +139,16 @@ const SignUp = () => {
           />
           <div className="fonction error"></div>
           <br />
-          <label htmlFor="salary">Salaire</label>
+          <label htmlFor="salaire">Salaire</label>
           <br />
           <input
             type="text"
-            name="salary"
-            id="salary"
-            onChange={(e) => setSalary(e.target.value)}
-            value={salary}
+            name="salaire"
+            id="salaire"
+            onChange={(e) => setSalaire(e.target.value)}
+            value={salaire}
           />
-          <div className="salary error"></div>
+          <div className="salaire error"></div>
           <br />
           <label htmlFor="email">Email</label>
           <br />

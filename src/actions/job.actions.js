@@ -5,6 +5,8 @@ export const GET_JOBS = "GET_JOBS";
 export const LIKE_JOB = "LIKE_JOB";
 export const UNLIKE_JOB = "UNLIKE_JOB";
 export const UPDATE_JOB = "UPDATE_JOB";
+export const ADD_JOB = "ADD_JOB";
+export const DELETE_JOB = "DELETE_JOB";
 
 export const getJobs = (num) => {
   return (dispatch) => {
@@ -47,23 +49,13 @@ export const unlikeJob = (jobId, userId) => {
   };
 };
 
-export const updateJob = (
-  jobId,
-  title,
-  company,
-  service,
-  projet,
-  desc,
-  profil,
-  tjm
-) => {
+export const updateJob = (jobId, title, service, projet, desc, profil, tjm) => {
   return (dispatch) => {
     return axios({
       method: "put",
       url: `${process.env.REACT_APP_API_URL}api/job/` + jobId,
       data: {
         titre: title,
-        entreprise: company,
         service: service,
         projet: projet,
         description: desc,
@@ -77,7 +69,6 @@ export const updateJob = (
           payload: {
             jobId,
             title,
-            company,
             service,
             projet,
             desc,
@@ -89,3 +80,44 @@ export const updateJob = (
       .catch((err) => console.log(err));
   };
 };
+
+export const addJob = (
+  titre,
+  companyId,
+  service,
+  projet,
+  description,
+  competence,
+  profil,
+  tjm
+) => {
+  return (dispatch) => {
+    return axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}api/job/`,
+      data: {
+        titre,
+        companyId,
+        service,
+        projet,
+        description,
+        competence,
+        profil,
+        tjm,
+      },
+    });
+  };
+};
+
+export function deleteJob(jobId) {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_URL}api/job/${jobId}`,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_JOB, payload: { jobId } });
+      })
+      .catch((err) => console.log(err));
+  };
+}

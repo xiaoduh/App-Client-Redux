@@ -10,8 +10,14 @@
         .edit-tr {
             cursor: pointer;
 
-            &:hover {
-                font-size: 1.1rem;
+            img {
+                width: 20px;
+                height: 20px;
+
+                &:hover {
+                    width: 21px;
+                    height: 21px;
+                }
             }
         }
 
