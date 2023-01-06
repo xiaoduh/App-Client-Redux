@@ -11,6 +11,7 @@ import Home from "../../pages/Home";
 import Data from "../../pages/Data";
 import Profil from "../../pages/Profil";
 import Navbar from "../Navbar";
+import ResetPasswordPage from "../../pages/ResetPasswordPage";
 
 const index = () => {
   return (
@@ -23,6 +24,11 @@ const index = () => {
           <Route path="/data" exact element={<Data />} />
           <Route path="/apply" exact element={<Apply />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route
+            path="/reset-password/:id/:token"
+            exact
+            element={<ResetPasswordPage />}
+          />
 
           {/* Member routes */}
           <Route path="/profil" exact element={<Profil />} />

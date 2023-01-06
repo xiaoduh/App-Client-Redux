@@ -84,10 +84,10 @@ const SignIn = () => {
             <div className="email error"></div>
             <div className="email success"></div>
             <br />
-            <input type="submit" value="Changer de mot de passe" />
+            <input type="submit" value="Demander un nouveau mot de passe" />
           </form>
           <div className="reset-password">
-            <p onClick={() => setResetPassword(!resetPassword)}>Se connecter</p>
+            <p onClick={() => setResetPassword(!resetPassword)}>Retour</p>
           </div>
         </>
       ) : (

@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser";
 
 const ApplyJobForm = ({ job }) => {
   const form = useRef();
+  console.log(job);
 
   const sendEmail = (e, job) => {
     e.preventDefault();
@@ -47,48 +48,37 @@ const ApplyJobForm = ({ job }) => {
         </NavLink>
         <h1>Formulaire de candidature 📧</h1>
         <h3>
-          pour le poste{" "}
-          <span style={{ color: "#55B2FF" }}>{upperCase(job.titre)}</span> chez{" "}
-          <span style={{ color: "#55B2FF" }}>{upperCase(job.entreprise)}</span>
+          pour le poste <span style={{ color: "#55B2FF" }}>{job.titre}</span>{" "}
+          chez <span style={{ color: "#55B2FF" }}>{job.company}</span>
         </h3>
       </div>
       <div className="apply-form">
         <div className="content-job-desc">
           <div className="header-desc-job">
-            <h2>
-              <span>{upperCase(job.titre)}</span>
-            </h2>
+            <h2>{/* <span>{upperCase(job.titre)}</span> */}</h2>
             <div className="info-header-job">
+              <p>{/* pour <span>{upperCase(job.entreprise)}</span> */}</p>
               <p>
-                pour <span>{upperCase(job.entreprise)}</span>
+                {/* profil recherché : <span>{upperCase(job.profil)}</span> */}
               </p>
-              <p>
-                profil recherché : <span>{upperCase(job.profil)}</span>
-              </p>
-              <p>
-                Budget : <span>{upperCase(job.tjm)}</span> € jour
-              </p>
+              <p>{/* Budget : <span>{upperCase(job.tjm)}</span> € jour */}</p>
             </div>
           </div>
           <div className="content-body-job">
             <h3>
               <span>
-                pour le compte de {upperCase(job.entreprise)} et au sein du
-                service {upperCase(job.service)}
+                {/* pour le compte de {upperCase(job.entreprise)} et au sein du
+                service {upperCase(job.service)} */}
               </span>
             </h3>
             <p>
               <span>
-                Tu interviendra sur le projet {upperCase(job.projet)} qui a pour
-                objectif de {upperCase(job.projet)}
+                {/* Tu interviendra sur le projet {upperCase(job.projet)} qui a pour
+                objectif de {upperCase(job.projet)} */}
               </span>
             </p>
-            <p>
-              <span>{upperCase(job.description)}</span>
-            </p>
-            <h3>
-              <span>{upperCase(job.competence)}</span>
-            </h3>
+            <p>{/* <span>{upperCase(job.description)}</span> */}</p>
+            <h3>{/* <span>{upperCase(job.competence)}</span> */}</h3>
           </div>
         </div>
         <div className="form-container">
